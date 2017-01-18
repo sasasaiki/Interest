@@ -1,0 +1,12 @@
+package: fukuri
+import:
+- package: github.com/revel/modules
+  version: ^0.13.0
+  subpackages:
+  - static/app/controllers
+  - testrunner/app
+  - testrunner/app/controllers
+- package: github.com/revel/revel
+  version: ^0.13.1
+  subpackages:
+  - testing
