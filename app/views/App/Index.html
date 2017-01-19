@@ -1,13 +1,12 @@
-{{set . "title" "Home"}}
-{{template "header.html" .}}
+{{set . "title" "Home"}} {{template "header.html" .}}
 
 <header class="jumbotron" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <h1>It works!</h1>
-      <p></p>
-    </div>
+<div class="container">
+  <div class="row">
+    <h1>It works!</h1>
+    <p></p>
   </div>
+</div>
 </header>
 
 <div class="container">
@@ -22,20 +21,45 @@
 
   <div class="container-fluid">
 
-    <div class="form-group row justify-content-center">
+    <div class="row justify-content-center">
 
-      <label for="inputStartValue" class="form-control-static col col-md-auto">初期投資額</label>
-      <div class="input-group col col-12 col-md-3">
-        <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
-        <span class="input-group-addon">円</span>
+      <!--<label for="inputStartValue" class="form-control-static col col-md-auto">初期投資額</label>-->
+      <div class="form-group col-12 col-sm-6 col-lg-5">
+        <label for="inputStartValue" class="control-label form-control-static">初期投資額a</label>
+        <div class="input-group">
+          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">円</span>
+        </div>
       </div>
 
-      <div class="col-12 col-md-1 col-lg-1"></div>
+      <div class="form-group col-12 col-sm-6 col-lg-5">
+        <label for="inputStartValue" class="control-label form-control-static">初期投資額</label>
+        <div class="input-group">
+          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">円</span>
+        </div>
+      </div>
 
-      <label for="inputInterest" class="form-control-static col col-md-auto">利率利率利率</label>
-      <div class="input-group col col-12 col-md-3">
-        <input type="text" id="inputInterest" class="form-control" aria-label="Amount (to the nearest dollar)">
-        <span class="input-group-addon">%</span>
+    </div>
+
+
+    <div class="row justify-content-center">
+
+      <!--<label for="inputStartValue" class="form-control-static col col-md-auto">初期投資額</label>-->
+      <div class="form-group col-12 col-md-6">
+        <label for="inputStartValue" class="control-label form-control-static col">初期投資額</label>
+        <div class="input-group col ">
+          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">円</span>
+        </div>
+      </div>
+
+      <div class="form-group col-12 col-md-6">
+        <label for="inputStartValue" class="control-label form-control-static col">初期投資額</label>
+        <div class="input-group col-12">
+          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">円</span>
+        </div>
       </div>
 
     </div>
