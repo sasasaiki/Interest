@@ -3,7 +3,7 @@
 <header class="jumbotron" style="background-color:#A9F16C">
 <div class="container">
   <div class="row">
-    <h1>It works!</h1>
+    <h1>オシャレな複利計算きになる予定のやつ</h1>
     <p></p>
   </div>
 </div>
@@ -23,24 +23,23 @@
 
     <div class="row justify-content-center">
 
-      <!--<label for="inputStartValue" class="form-control-static col col-md-auto">初期投資額</label>-->
       <div class="form-group col-11 col-sm-5">
-        <label for="inputStartValue" class="control-label form-control-static">初期投資額a</label>
+        <label for="inputStartValue" class="control-label form-control-static">初期投資</label>
         <div class="input-group">
-          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
-          <span class="input-group-addon">円</span>
+          <input type="number" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">万円</span>
         </div>
       </div>
 
       <div class="form-group col-11 col-sm-5">
-        <label for="inputStartValue" class="control-label form-control-static">利率</label>
+        <label for="inputInterest" class="control-label form-control-static">利率</label>
         <div class="input-group">
-          <select name="investment_frequency" id="investment_frequency" class="form-control　col-1"><option selected="selected" value="1">毎月</option>
-            <option value="2">毎4半期</option>
-            <option value="3">毎年</option>
+          <select name="interest_frequency" id="interest_frequency" class="form-control　col-1"><option selected="selected" value="1">毎年</option>
+            <option value="2">毎月</option>
+            <option value="3">毎日</option>
           </select>
-          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
-          <span class="input-group-addon">円</span>
+          <input type="number" id="inputInterest" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">%</span>
         </div>
       </div>
 
@@ -50,29 +49,38 @@
 
     <div class="row justify-content-center">
 
-      <!--<label for="inputStartValue" class="form-control-static col col-md-auto">初期投資額</label>-->
       <div class="form-group col-11 col-sm-5">
-        <label for="inputStartValue" class="control-label form-control-static">初期投資額a</label>
+        <label for="inputInvestment" class="control-label form-control-static">定期投資</label>
         <div class="input-group">
-          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
-          <span class="input-group-addon">円</span>
+          <select name="investment_frequency" id="investment_frequency" class="form-control　col-1"><option selected="selected" value="1">毎年</option>
+            <option value="2">毎月</option>
+            <option value="3">毎日</option>
+          </select>
+          <input type="number" id="inputInvestment" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">万円</span>
         </div>
       </div>
 
       <div class="form-group col-11 col-sm-5">
-        <label for="inputStartValue" class="control-label form-control-static">利率</label>
+        <label for="inputPeriod" class="control-label form-control-static">期間</label>
         <div class="input-group">
-          <select name="investment_frequency" id="investment_frequency" class="form-control　col-1"><option selected="selected" value="1">毎月</option>
-            <option value="2">毎4半期</option>
-            <option value="3">毎年</option>
-          </select>
-          <input type="text" id="inputStartValue" class="form-control" aria-label="Amount (to the nearest dollar)">
-          <span class="input-group-addon">円</span>
+          <input type="number" id="inputPeriod" class="form-control" aria-label="Amount (to the nearest dollar)">
+          <span class="input-group-addon">年</span>
         </div>
       </div>
 
 
     </div>
+
+
+    <p>
+    <div class="row justify-content-center">
+      <div class="form-group col-12 col-sm-6"></div>
+      <div class="form-group col-11 col-sm-4">
+          <input type="submit" class="col" value="計算！" /> 
+      </div>
+    </div>
+    </p>
 
 
   </form>
