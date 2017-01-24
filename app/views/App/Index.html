@@ -34,11 +34,11 @@
       <div class="form-group col-11 col-sm-5">
         <label for="inputInterest" class="control-label form-control-static">利率</label>
         <div class="input-group">
-          <select name="interestFrequency" id="interestFrequency" class="form-control　col-1"><option selected="selected" value="1">毎年</option>
+          <select name="interestFrequency" id="interestFrequency" class="custom-select form-control　col-1"><option selected="selected" value="1">毎年</option>
             <option value="2">毎月</option>
           </select>
           <input type="number" value="10" name="inputInterest" id="inputInterest" class="form-control" aria-label="">
-          <span class="input-group-addon">%</span>
+          <span class="input-group-addon ">%</span>
         </div>
       </div>
 
@@ -51,11 +51,11 @@
       <div class="form-group col-11 col-sm-5">
         <label for="inputInvestment" class="control-label form-control-static">定期投資</label>
         <div class="input-group">
-          <select name="investmentFrequency" id="investmentFrequency" class="form-control　col-1"><option selected="selected" value="1">毎年</option>
+          <select name="investmentFrequency" id="investmentFrequency" class="custom-select form-control　col-1"><option selected="selected" value="1">毎年</option>
             <option value="2">毎月</option>
           </select>
           <input type="number" value="50" name="inputInvestment" id="inputInvestment" class="form-control" aria-label="">
-          <span class="input-group-addon">万円</span>
+          <span class="input-group-addon ">万円</span>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
       <div class="row justify-content-center">
         <div class="form-group col-12 col-sm-6"></div>
         <div class="form-group col-11 col-sm-4">
-          <input type="submit" class="col" value="計算！" />
+          <input type="submit" class="col btn btn-lg btn-primary-outline" value="計算！" />
         </div>
       </div>
     </p>
@@ -83,7 +83,7 @@
 
   </form>
 
-  <table id="resultTable">
+  <table id="resultTable" class="table">
     <tr>
       <th>利子</th>
       <th>利子合計</th>
@@ -98,6 +98,14 @@
 
 
 <script>
+  // 小数点n位までを残す関数
+  // number=対象の数値
+  // n=残したい小数点以下の桁数
+  function floatFormat( number, n ) {
+  	var _pow = Math.pow( 10 , n ) ;
+  	return Math.round( number * _pow ) / _pow ;
+  }
+  
   jQuery(function ($) {
     $('#mainForm').submit(function (event) {
       // HTMLでの送信をキャンセル
@@ -137,7 +145,12 @@
             //年単位の表示
             if (i % 12 == 0) {
               var td = '</td><td>';
-              $('#resultTable tbody > tr:last').after('<tr><td>' + result.InterestManth[i] + td + result.InterestSumManth[i] + td + result.InvestmentNoInterestManth[i] + td + result.InvestmentResultManth[i] + '</td></tr>');
+              var interestManth = floatFormat(result.InterestManth[i],4);
+              var interestSumManth = floatFormat(result.InterestSumManth[i],4);
+              var investmentNoInterestManth = floatFormat(result.InvestmentNoInterestManth[i],4);
+              var investmentResultManth = floatFormat(result.InvestmentResultManth[i],4);
+
+              $('#resultTable tbody > tr:last').after('<tr><td>' + interestManth + td + interestSumManth + td + investmentNoInterestManth + td + investmentResultManth + '</td></tr>');
             }
           }
 
@@ -152,6 +165,8 @@
     });
 
   });
+
+
 </script>
 
 {{template "footer.html" .}}
