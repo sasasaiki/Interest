@@ -1,9 +1,9 @@
 {{set . "title" "Home"}} {{template "header.html" .}}
 
-<header class="jumbotron" style="background-color:#A9F16C">
-<div class="container">
+<header class="jumbotron" style="background-color:#1BC98E">
+<div class="container-fluid">
   <div class="row">
-    <h1></h1>
+    <h1>a</h1>
     <p></p>
   </div>
 </div>
@@ -83,15 +83,61 @@
 
   </form>
 
-  <table id="resultTable" class="table">
-    <tr>
-      <th>利子</th>
-      <th>利子合計</th>
-      <th>元金合計</th>
-      <th>全資産</th>
-    </tr>
-  </table>
 
+  <div class="row justify-content-center">
+    <div class="col col-sm-11">
+      <!--タブのボタン部分-->
+      <p>
+        <div class="hr-divider">
+          <ul class="nav nav-tabs nav-pills hr-divider-content hr-divider-nav">
+            <li class="nav-item active">
+              <a href="#tab1" class="nav-link" data-toggle="tab">年ごと</a>
+            </li>
+            <li class="nav-item">
+              <a href="#tab2" class="nav-link" data-toggle="tab">月ごと</a>
+            </li>
+          </ul>
+        </div>
+
+      </p>
+      <!--タブのコンテンツ部分-->
+      <div class="tab-content">
+        <div id="tab1" class="tab-pane active">
+
+          <div class="row justify-content-center">
+            <div class="form-group col-12 col-md-10">
+              <table id="resultTable" class="table table-striped table-bordered">
+                <tr>
+                  <th>年</th>
+                  <th>利子</th>
+                  <th>利子合計</th>
+                  <th>元金合計</th>
+                  <th>全資産</th>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+        </div>
+        <div id="tab2" class="tab-pane">
+
+          <div class="row justify-content-center">
+            <div class="form-group col-12 col-md-10">
+              <table id="resultTableManth" class="table table-striped table-bordered">
+                <tr>
+                  <th>月</th>
+                  <th>利子</th>
+                  <th>利子合計</th>
+                  <th>元金合計</th>
+                  <th>全資産</th>
+                </tr>
+              </table>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -101,11 +147,11 @@
   // 小数点n位までを残す関数
   // number=対象の数値
   // n=残したい小数点以下の桁数
-  function floatFormat( number, n ) {
-  	var _pow = Math.pow( 10 , n ) ;
-  	return Math.round( number * _pow ) / _pow ;
+  function floatFormat(number, n) {
+    var _pow = Math.pow(10, n);
+    return Math.ceil(number * _pow) / _pow;
   }
-  
+
   jQuery(function ($) {
     $('#mainForm').submit(function (event) {
       // HTMLでの送信をキャンセル
@@ -140,18 +186,31 @@
         // 通信成功時の処理
         success: function (result, textStatus, xhr) {
 
+          //初期化
+          $('#resultTable').html ('<tr><th>年</th><th>利子</th><th>利子合計</th><th>元金合計</th><th>全資産</th></tr>');
+          $('#resultTableManth').html ('<tr><th>月</th><th>利子</th><th>利子合計</th><th>元金合計</th><th>全資産</th></tr>');
+
           var i = 0;
           for (i; i < result.InvestmentResultManth.length; i++) {
+            var td = '</td><td>';
+            var interestManth = floatFormat(result.InterestManth[i], 2);
+            var interestSumManth = floatFormat(result.InterestSumManth[i], 2);
+            var investmentNoInterestManth = floatFormat(result.InvestmentNoInterestManth[i], 2);
+            var investmentResultManth = floatFormat(result.InvestmentResultManth[i], 2);
+
+                
+
             //年単位の表示
             if (i % 12 == 0) {
-              var td = '</td><td>';
-              var interestManth = floatFormat(result.InterestManth[i],4);
-              var interestSumManth = floatFormat(result.InterestSumManth[i],4);
-              var investmentNoInterestManth = floatFormat(result.InvestmentNoInterestManth[i],4);
-              var investmentResultManth = floatFormat(result.InvestmentResultManth[i],4);
-
-              $('#resultTable tbody > tr:last').after('<tr><td>' + interestManth + td + interestSumManth + td + investmentNoInterestManth + td + investmentResultManth + '</td></tr>');
+              $('#resultTable tbody > tr:last').after('<tr><td>' + i / 12 + td + interestManth + td + interestSumManth + td + investmentNoInterestManth + td + investmentResultManth + '</td></tr>');
             }
+
+            if (i % result.InterestSpan != 0){
+              interestManth = 0;
+            }
+
+            //月単位の表示
+            $('#resultTableManth tbody > tr:last').after('<tr><td>' + i + td + interestManth + td + interestSumManth + td + investmentNoInterestManth + td + investmentResultManth + '</td></tr>');
           }
 
 

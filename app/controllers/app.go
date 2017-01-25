@@ -19,7 +19,7 @@ func (c App) Result(start int, inputInterest int, interestFrequency int, inputIn
 	revel.WARN.Println("計算開始")
 
 	resultdata := resultData{}
-	periodManth := (period + 1) * 12
+	periodManth := (period * 12) + 1
 	invested := float64(start)
 	simpleInvested := int(start)
 	interested := float64(0)
@@ -69,6 +69,8 @@ func (c App) Result(start int, inputInterest int, interestFrequency int, inputIn
 
 	}
 
+	resultdata.InterestSpan = interestSpan
+
 	return c.RenderJson(resultdata)
 }
 
@@ -102,4 +104,5 @@ type resultData struct {
 	InterestManth             []float64 //毎月の利子
 	InvestmentNoInterestManth []int     //利回りなしの毎月の合計
 	InvestmentResultManth     []float64 //すべての合計毎月
+	InterestSpan              int       //何ヶ月で利子発生か
 }
