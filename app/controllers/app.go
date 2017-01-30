@@ -44,7 +44,7 @@ func (c App) Result(start int, inputInterest int, interestFrequency int, inputIn
 	for manth := 1; manth < periodManth; manth++ {
 
 		//利息計算
-		if interestSpan == 1 || manth%interestSpan == 1 {
+		if interestSpan == 1 || manth%interestSpan == 0 {
 
 			invested, interested = addInterest(invested, interested, inputInterest)
 			resultdata.InterestSumManth[manth] = resultdata.InterestSumManth[manth-1] + interested
@@ -56,7 +56,7 @@ func (c App) Result(start int, inputInterest int, interestFrequency int, inputIn
 		}
 
 		//追加投資計算
-		if investmentSpan == 1 || manth%investmentSpan == 1 {
+		if investmentSpan == 1 || manth%investmentSpan == 0 {
 
 			simpleInvested = int(addInvest(float64(simpleInvested), inputInvestment, manth, investmentSpan))
 			invested = addInvest(invested, inputInvestment, manth, investmentSpan)

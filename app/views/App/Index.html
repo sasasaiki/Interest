@@ -80,9 +80,7 @@
       </div>
     </p>
 
-
   </form>
-
 
   <div class="row justify-content-center">
     <div class="col col-sm-11">
@@ -107,13 +105,6 @@
           <div class="row justify-content-center">
             <div class="form-group col-12 col-md-10">
               <table id="resultTable" class="table table-striped table-bordered">
-                <tr>
-                  <th>年</th>
-                  <th>利子</th>
-                  <th>利子合計</th>
-                  <th>元金合計</th>
-                  <th>全資産</th>
-                </tr>
               </table>
             </div>
 
@@ -124,108 +115,108 @@
           <div class="row justify-content-center">
             <div class="form-group col-12 col-md-10">
               <table id="resultTableManth" class="table table-striped table-bordered">
-                <tr>
-                  <th>月</th>
-                  <th>利子</th>
-                  <th>利子合計</th>
-                  <th>元金合計</th>
-                  <th>全資産</th>
-                </tr>
               </table>
             </div>
 
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
-</div>
 
 
+  <script>
+    // 小数点n位までを残す関数
+    // number=対象の数値
+    // n=残したい小数点以下の桁数
+    function floatFormat(number, n) {
+      var _pow = Math.pow(10, n);
+      return Math.ceil(number * _pow) / _pow;
+    }
 
-<script>
-  // 小数点n位までを残す関数
-  // number=対象の数値
-  // n=残したい小数点以下の桁数
-  function floatFormat(number, n) {
-    var _pow = Math.pow(10, n);
-    return Math.ceil(number * _pow) / _pow;
-  }
 
-  jQuery(function ($) {
-    $('#mainForm').submit(function (event) {
-      // HTMLでの送信をキャンセル
-      event.preventDefault();
+    jQuery(function ($) {
+      $('#mainForm').submit(function (event) {
+        // HTMLでの送信をキャンセル
+        event.preventDefault();
 
-      // 操作対象のフォーム要素を取得
-      var $form = $(this);
+        // 操作対象のフォーム要素を取得
+        var $form = $(this);
 
-      // 送信ボタンを取得
-      // （後で使う: 二重送信を防止する。）
-      var $button = $form.find('button');
+        // 送信ボタンを取得
+        // （後で使う: 二重送信を防止する。）
+        var $button = $form.find('button');
 
-      // 送信
-      $.ajax({
-        url: $form.attr('action'),
-        type: $form.attr('method'),
-        data: $form.serialize(),
-        dataType: 'json',
-        timeout: 10000,  // 単位はミリ秒
+        // 送信
+        $.ajax({
+          url: $form.attr('action'),
+          type: $form.attr('method'),
+          data: $form.serialize(),
+          dataType: 'json',
+          timeout: 10000,  // 単位はミリ秒
 
-        // 送信前
-        beforeSend: function (xhr, settings) {
-          // ボタンを無効化し、二重送信を防止
-          $button.attr('disabled', true);
-        },
-        // 応答後
-        complete: function (xhr, textStatus) {
-          // ボタンを有効化し、再送信を許可
-          $button.attr('disabled', false);
-        },
+          // 送信前
+          beforeSend: function (xhr, settings) {
+            // ボタンを無効化し、二重送信を防止
+            $button.attr('disabled', true);
+          },
+          // 応答後
+          complete: function (xhr, textStatus) {
+            // ボタンを有効化し、再送信を許可
+            $button.attr('disabled', false);
+          },
 
-        // 通信成功時の処理
-        success: function (result, textStatus, xhr) {
+          // 通信成功時の処理
+          success: function (result, textStatus, xhr) {
 
-          //初期化
-          $('#resultTable').html ('<tr><th>年</th><th>利子</th><th>利子合計</th><th>元金合計</th><th>全資産</th></tr>');
-          $('#resultTableManth').html ('<tr><th>月</th><th>利子</th><th>利子合計</th><th>元金合計</th><th>全資産</th></tr>');
+            //初期化
+            $('#resultTable').html('<tr><th>年</th><th>全資産</th><th>利子</th><th>利子合計</th><th>元金合計</th></tr>');
+            $('#resultTableManth').html('<tr><th>月</th><th>全資産</th><th>利子</th><th>利子合計</th><th>元金合計</th></tr>');
 
-          var i = 0;
-          for (i; i < result.InvestmentResultManth.length; i++) {
-            var td = '</td><td>';
-            var interestManth = floatFormat(result.InterestManth[i], 2);
-            var interestSumManth = floatFormat(result.InterestSumManth[i], 2);
-            var investmentNoInterestManth = floatFormat(result.InvestmentNoInterestManth[i], 2);
-            var investmentResultManth = floatFormat(result.InvestmentResultManth[i], 2);
+            var interestYear = 0;
+            var i = 0;
+            for (i; i < result.InvestmentResultManth.length; i++) {
+              var td = '</td><td>';
+              var interestManth = floatFormat(result.InterestManth[i], 2);
+              var interestSumManth = floatFormat(result.InterestSumManth[i], 2);
+              var investmentNoInterestManth = floatFormat(result.InvestmentNoInterestManth[i], 2);
+              var investmentResultManth = floatFormat(result.InvestmentResultManth[i], 2);
 
-                
 
-            //年単位の表示
-            if (i % 12 == 0) {
-              $('#resultTable tbody > tr:last').after('<tr><td>' + i / 12 + td + interestManth + td + interestSumManth + td + investmentNoInterestManth + td + investmentResultManth + '</td></tr>');
+              //利回り発生月以外は0
+              //利回り毎月なら通らない
+              if (i % result.InterestSpan != 0) {
+                interestManth = 0;
+              }
+
+              interestYear += interestManth;
+
+
+              //年単位の表示
+              if (i % 12 == 0) {
+                $('#resultTable tbody > tr:last').after('<tr><td>' + i / 12 + td + investmentResultManth + td + floatFormat(interestYear,2) + td + interestSumManth  + td  + investmentNoInterestManth +   '</td></tr>');
+                interestYear = 0;
+              }
+
+              //月単位の表示
+              $('#resultTableManth tbody > tr:last').after('<tr><td>' + i + td + investmentResultManth + td + interestManth +  td + interestSumManth + td  + investmentNoInterestManth +  '</td></tr>');
+
             }
 
-            if (i % result.InterestSpan != 0){
-              interestManth = 0;
-            }
+          },
 
-            //月単位の表示
-            $('#resultTableManth tbody > tr:last').after('<tr><td>' + i + td + interestManth + td + interestSumManth + td + investmentNoInterestManth + td + investmentResultManth + '</td></tr>');
+          // 通信失敗時の処理
+          error: function (xhr, textStatus, error) {
+            $('#result').text("error");
           }
-
-
-        },
-
-        // 通信失敗時の処理
-        error: function (xhr, textStatus, error) {
-          $('#result').text("error");
-        }
+        });
       });
+
     });
 
-  });
 
-
-</script>
+  </script>
 
 {{template "footer.html" .}}
