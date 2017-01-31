@@ -1,12 +1,30 @@
 {{set . "title" "Home"}} {{template "header.html" .}}
 
-<header class="jumbotron" style="background-color:#1BC98E">
-<div class="container-fluid">
-  <div class="row">
-    <h1>複利利回り計算機</h1>
+<style>
+    header.jumbotron {
+      background: url("/public/img/header-building-min.jpg");
+      background-position: center center;
+      background-size: cover;
+      color: #fff;
+    }
+    .clearText {
+      text-indent:100%;
+      white-space:nowrap;
+      overflow:hidden;
+      font-size: 0vw;
+    }
+    .subText {
+      font-size: 1vw;
+    }
+
+</style>
+
+<header class="jumbotron">
+  <div class="container">
+    <div style="color:#ddd; padding-left: 7%; font-size: 5vw;line-height: 1em">Make<br/>Your<br/>Invest.</div>
     <p></p>
+    <div style="color:#ddd; padding-left: 7%; font-size: 1.2vw;line-height: 1.2em">複利・利回り計算機</div>
   </div>
-</div>
 </header>
 
 <div class="container">
@@ -196,12 +214,12 @@
 
               //年単位の表示
               if (i % 12 == 0) {
-                $('#resultTable tbody > tr:last').after('<tr><td>' + i / 12 + td + investmentResultManth + td + floatFormat(interestYear,2) + td + interestSumManth  + td  + investmentNoInterestManth +   '</td></tr>');
+                $('#resultTable tbody > tr:last').after('<tr><td>' + i / 12 + td + investmentResultManth + td + floatFormat(interestYear, 2) + td + interestSumManth + td + investmentNoInterestManth + '</td></tr>');
                 interestYear = 0;
               }
 
               //月単位の表示
-              $('#resultTableManth tbody > tr:last').after('<tr><td>' + i + td + investmentResultManth + td + interestManth +  td + interestSumManth + td  + investmentNoInterestManth +  '</td></tr>');
+              $('#resultTableManth tbody > tr:last').after('<tr><td>' + i + td + investmentResultManth + td + interestManth + td + interestSumManth + td + investmentNoInterestManth + '</td></tr>');
 
             }
 
