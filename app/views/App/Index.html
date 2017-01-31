@@ -21,10 +21,10 @@
 
 <header class="jumbotron">
   <div class="container">
-    <div style="color:#ddd; padding-left: 7%; font-size: 5vw;line-height: 1em">Make<br/>Your<br/>Invest.</div>
-    <p></p>
-    <div style="color:#ddd; padding-left: 7%; font-size: 1.2vw;line-height: 1.2em">複利・利回り計算機</div>
-  </div>
+    <div style="color:#ddd; padding-left: 7%; font-size: 5vw;line-height: 1em">複利<br/>利回り<br/>計算機</div>
+<p></p>
+<div style="color:#ddd; padding-left: 8%; font-size: 1.2vw;line-height: 1.2em">Make Your Investment</div>
+</div>
 </header>
 
 <div class="container">
@@ -35,8 +35,19 @@
   </div>
 </div>
 
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col col-11 col-sm-10 text-center">
+      <a class="btn btn-info-outline btn-block" style="font-size: 3vw; margin-bottom: 20px" href="http://3jigen.net/" role="button">Go to blog !!</a>
+</div>
+</div>
+</div>
+
+<p></p>
 
 <div class="container-fluid">
+
+
   <form id="mainForm" action="App/Result/" method="GET">
 
     <div class="row justify-content-center">
@@ -90,62 +101,70 @@
 
 
     <p>
-      <div class="row justify-content-center">
-        <div class="form-group col-12 col-sm-6"></div>
-        <div class="form-group col-11 col-sm-4">
-          <input type="submit" class="col btn btn-lg btn-primary-outline" value="計算！" />
+      <div class="row justify-content-center" style="margin-top: 30px">
+<div class="form-group col-12 col-sm-6">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- Interest.3jigen -->
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7171481905282599" data-ad-slot="3568168069" data-ad-format="auto"></ins>
+<script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+</div>
+<div class="form-group col-11 col-sm-4">
+  <input type="submit" class="col btn btn-lg btn-primary" value="計算開始" />
+</div>
+</div>
+</p>
+
+</form>
+
+
+<div class="row justify-content-center">
+  <div class="col col-sm-11">
+    <!--タブのボタン部分-->
+    <p>
+      <div class="hr-divider">
+        <ul class="nav nav-tabs nav-pills hr-divider-content hr-divider-nav">
+          <li class="nav-item active">
+            <a href="#tab1" class="nav-link" data-toggle="tab">年ごと</a>
+          </li>
+          <li class="nav-item">
+            <a href="#tab2" class="nav-link" data-toggle="tab">月ごと</a>
+          </li>
+        </ul>
+      </div>
+
+    </p>
+    <!--タブのコンテンツ部分-->
+    <div class="tab-content">
+      <div id="tab1" class="tab-pane active">
+
+        <div class="row justify-content-center">
+          <div class="form-group col-12 col-md-10">
+            <table id="resultTable" class="table table-striped table-bordered">
+            </table>
+          </div>
+
         </div>
       </div>
-    </p>
+      <div id="tab2" class="tab-pane">
 
-  </form>
-
-  <div class="row justify-content-center">
-    <div class="col col-sm-11">
-      <!--タブのボタン部分-->
-      <p>
-        <div class="hr-divider">
-          <ul class="nav nav-tabs nav-pills hr-divider-content hr-divider-nav">
-            <li class="nav-item active">
-              <a href="#tab1" class="nav-link" data-toggle="tab">年ごと</a>
-            </li>
-            <li class="nav-item">
-              <a href="#tab2" class="nav-link" data-toggle="tab">月ごと</a>
-            </li>
-          </ul>
-        </div>
-
-      </p>
-      <!--タブのコンテンツ部分-->
-      <div class="tab-content">
-        <div id="tab1" class="tab-pane active">
-
-          <div class="row justify-content-center">
-            <div class="form-group col-12 col-md-10">
-              <table id="resultTable" class="table table-striped table-bordered">
-              </table>
-            </div>
-
+        <div class="row justify-content-center">
+          <div class="form-group col-12 col-md-10">
+            <table id="resultTableManth" class="table table-striped table-bordered">
+            </table>
           </div>
-        </div>
-        <div id="tab2" class="tab-pane">
 
-          <div class="row justify-content-center">
-            <div class="form-group col-12 col-md-10">
-              <table id="resultTableManth" class="table table-striped table-bordered">
-              </table>
-            </div>
-
-          </div>
         </div>
       </div>
     </div>
-
   </div>
 
+</div>
 
 
-  <script>
+
+<script>
     // 小数点n位までを残す関数
     // number=対象の数値
     // n=残したい小数点以下の桁数
