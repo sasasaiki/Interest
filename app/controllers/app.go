@@ -1,10 +1,6 @@
 package controllers
 
-import (
-	"strconv"
-
-	"github.com/revel/revel"
-)
+import "github.com/revel/revel"
 
 type App struct {
 	*revel.Controller
@@ -14,7 +10,7 @@ func (c App) Index() revel.Result {
 	return c.Render()
 }
 
-func (c App) Result(start int, inputInterest int, interestFrequency int, inputInvestment int, investmentFrequency int, period int) revel.Result {
+func (c App) Result(start int, inputInterest float64, interestFrequency int, inputInvestment int, investmentFrequency int, period int) revel.Result {
 
 	revel.WARN.Println("計算開始")
 
@@ -34,12 +30,6 @@ func (c App) Result(start int, inputInterest int, interestFrequency int, inputIn
 	resultdata.InterestManth[0] = 0
 	resultdata.InvestmentNoInterestManth[0] = start
 	resultdata.InvestmentResultManth[0] = invested
-
-	revel.WARN.Println("start" + strconv.Itoa(start))
-	revel.WARN.Println("select" + strconv.Itoa(interestFrequency))
-	revel.WARN.Println("span" + strconv.Itoa(interestSpan))
-	revel.WARN.Println("interest" + strconv.Itoa(inputInterest))
-	revel.WARN.Println("invest" + strconv.Itoa(inputInvestment))
 
 	for manth := 1; manth < periodManth; manth++ {
 
@@ -74,7 +64,7 @@ func (c App) Result(start int, inputInterest int, interestFrequency int, inputIn
 	return c.RenderJson(resultdata)
 }
 
-func addInterest(invested float64, interested float64, interest int) (resultInvest float64, resultInterest float64) {
+func addInterest(invested float64, interested float64, interest float64) (resultInvest float64, resultInterest float64) {
 	resultInterest = float64(invested) * (float64(interest) * 0.0100)
 	resultInvest = invested + resultInterest
 	return

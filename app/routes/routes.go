@@ -17,7 +17,7 @@ func (_ tApp) Index(
 
 func (_ tApp) Result(
 		start int,
-		inputInterest int,
+		inputInterest float64,
 		interestFrequency int,
 		inputInvestment int,
 		investmentFrequency int,

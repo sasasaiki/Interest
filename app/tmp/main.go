@@ -44,7 +44,7 @@ func main() {
 				Name: "Result",
 				Args: []*revel.MethodArg{ 
 					&revel.MethodArg{Name: "start", Type: reflect.TypeOf((*int)(nil)) },
-					&revel.MethodArg{Name: "inputInterest", Type: reflect.TypeOf((*int)(nil)) },
+					&revel.MethodArg{Name: "inputInterest", Type: reflect.TypeOf((*float64)(nil)) },
 					&revel.MethodArg{Name: "interestFrequency", Type: reflect.TypeOf((*int)(nil)) },
 					&revel.MethodArg{Name: "inputInvestment", Type: reflect.TypeOf((*int)(nil)) },
 					&revel.MethodArg{Name: "investmentFrequency", Type: reflect.TypeOf((*int)(nil)) },
