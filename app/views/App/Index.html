@@ -21,7 +21,7 @@
 
 <header class="jumbotron">
   <div class="container">
-    <div style="color:#ddd; padding-left: 7%; font-size: 5vw;line-height: 1em">複利<br/>利回り<br/>計算機</div>
+    <h1><div style="color:#ddd; padding-left: 7%; font-size: 5vw;line-height: 1em">複利<br>利回り<br>計算機</die></h1>
 <p></p>
 <div style="color:#ddd; padding-left: 8%; font-size: 1.2vw;line-height: 1.2em">Make Your Investment</div>
 </div>
@@ -121,12 +121,13 @@
 </div>
 </div>
 
+       
 
 <div class="row justify-content-center">
   <div class="col col-sm-11">
     <!--タブのボタン部分-->
     <p>
-      <div class="hr-divider">
+      <div class="hr-divider" id="result">
         <ul class="nav nav-tabs nav-pills hr-divider-content hr-divider-nav">
           <li class="nav-item active">
             <a href="#tab1" class="nav-link" data-toggle="tab">年ごと</a>
@@ -142,6 +143,10 @@
     <div class="tab-content">
       <div id="tab1" class="tab-pane active">
 
+        <div id="yearGraphParent" style="margin-bottom: 30px">
+          <canvas id="yearGraph" ></canvas>
+        </div>
+
         <div class="row justify-content-center">
           <div class="form-group col-12 col-md-10">
             <table id="resultTable" class="table table-striped table-bordered">
@@ -149,8 +154,15 @@
           </div>
 
         </div>
+
+
+
       </div>
       <div id="tab2" class="tab-pane">
+
+        <div id="manthGraphParent" style="margin-bottom: 30px">
+          <canvas id="manthGraph"></canvas>
+        </div>
 
         <div class="row justify-content-center">
           <div class="form-group col-12 col-md-10">
@@ -174,6 +186,92 @@
     function floatFormat(number, n) {
       var _pow = Math.pow(10, n);
       return Math.ceil(number * _pow) / _pow;
+    }
+
+    function drawManthGraph(manthLabels,manthData,manthSimpleData)
+    {
+      var ctx = $("#manthGraph").get(0).getContext("2d");
+      drawBarGraph(ctx,manthLabels,manthData,manthSimpleData,"月")
+    }
+
+    function drawYearGraph(yearLabels,yearData,yearSimpleData)
+    {
+      var ctx = $("#yearGraph").get(0).getContext("2d");
+      drawBarGraph(ctx,yearLabels,yearData,yearSimpleData,"年")
+    }
+
+    function drawBarGraph(ctx,Labels,Data,simpleData,x)
+    {
+      //jQueryの場合
+
+      var hoge=[1,2,3,4,5];
+      var data = {
+        labels: Labels, 
+        datasets:
+        [
+          {
+            label: "利回りなし資産額",
+            backgroundColor: 'rgba(28,168,221,1)',
+            borderColor: 'rgba(28,168,221,1)',
+            borderWidth: 1,
+            data: simpleData,
+          },
+          {
+            label: "利回り合計額",
+            backgroundColor: 'rgba(99,222, 100, 1)',
+            borderColor: 'rgba(99,222,100,1)',
+            borderWidth: 1,
+            data: Data,
+          },
+        ]
+      };
+
+      //オプションの設定
+  options= {
+      //軸の設定
+      scales: {
+          xAxes: [{
+            stacked: true, //積み上げ棒グラフにする設定 
+　　　　　　　　　//目盛りの設定
+              ticks: {
+                  fontColor:'rgba(200,200,200,1)',
+              },
+            gridLines:{
+              color:'rgba(200,200,200,0)',
+            },
+          }],
+          //縦軸の設定
+          yAxes: [{
+            stacked: true, //積み上げ棒グラフにする設定 
+            gridLines:{
+              color:'rgba(200,200,200,0.5)',
+            },
+　　　　　　　　　//目盛りの設定
+              ticks: {
+                  //開始値を0にする
+                  beginAtZero:true,
+                  fontColor:'rgba(200,200,200,1)',
+              },
+          }],
+      },
+    // X Value of the tooltip as a string
+    xLabel: x,
+
+     legend: {
+              labels: {
+                  fontColor:'rgba(200,200,200,1)',
+              },
+              display: true
+          },
+
+  };
+
+      var myChart = new Chart(ctx,{
+        type:'bar',
+        data,
+        options
+      });
+
     }
 
 
@@ -214,6 +312,16 @@
             //初期化
             $('#resultTable').html('<tr><th>年</th><th>全資産</th><th>利子</th><th>利子合計</th><th>元金合計</th></tr>');
             $('#resultTableManth').html('<tr><th>月</th><th>全資産</th><th>利子</th><th>利子合計</th><th>元金合計</th></tr>');
+            $('#manthGraphParent').html('<canvas id="manthGraph"></canvas>');
+            $('#yearGraphParent').html('<canvas id="yearGraph"></canvas>');
+
+            var manthInvestData = [];
+            var yearInvestData = [];
+            var manthSimpleInvestData = [];
+            var yearSimpleInvestData = [];
+
+            var manthLabels = [];
+            var yearLabels = [];
 
             var interestYear = 0;
             var i = 0;
@@ -238,12 +346,22 @@
               if (i % 12 == 0) {
                 $('#resultTable tbody > tr:last').after('<tr><td>' + i / 12 + td + investmentResultManth + td + floatFormat(interestYear, 2) + td + interestSumManth + td + investmentNoInterestManth + '</td></tr>');
                 interestYear = 0;
+                yearInvestData.push(interestSumManth);
+                yearSimpleInvestData.push(investmentNoInterestManth);
+                yearLabels.push(i/12 + "年");
               }
 
               //月単位の表示
               $('#resultTableManth tbody > tr:last').after('<tr><td>' + i + td + investmentResultManth + td + interestManth + td + interestSumManth + td + investmentNoInterestManth + '</td></tr>');
-
+              manthInvestData.push(interestSumManth);
+              manthSimpleInvestData.push(investmentNoInterestManth);
+              manthLabels.push(i + "月");
             }
+
+            drawManthGraph(manthLabels,manthInvestData,manthSimpleInvestData);
+            drawYearGraph(yearLabels,yearInvestData,yearSimpleInvestData);
+
+            location.href = "#result";
 
           },
 
